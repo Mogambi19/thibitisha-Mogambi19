@@ -21,7 +21,7 @@ class RolePolicy
      */
     public function view(User $user, Role $role): bool
     {
-        return false;
+        return $user->role && in_array($user->role->name, ['admin', 'staff']);
     }
 
     /**
@@ -45,7 +45,7 @@ class RolePolicy
      */
     public function delete(User $user, Role $role): bool
     {
-        return false;
+        return $user->role && $user->role->name === 'admin';
     }
 
     /**

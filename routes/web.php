@@ -23,3 +23,5 @@ use App\Livewire\Practitioners;
 
 Route::get('/statuses', Statuses::class)->name('statuses.index');
 Route::get('/practitioners', Practitioners::class)->name('practitioners.index');
+Route::get('/test403', function () { abort(403); });
+Route::get('/test404', function () { abort(404); });
