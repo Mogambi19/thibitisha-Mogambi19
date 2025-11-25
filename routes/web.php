@@ -10,3 +10,7 @@ Route::get('/', function () {
 
 use App\Http\Controllers\RoleController;
 Route::resource('roles', RoleController::class);
+
+use App\Http\Livewire\Statuses;
+
+Route::get('/statuses', Statuses::class)->name('statuses.index');
