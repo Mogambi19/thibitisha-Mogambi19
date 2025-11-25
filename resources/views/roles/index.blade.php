@@ -31,36 +31,42 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>admin</td>
-                <td>Administrator</td>
-                <td>
-                  <span class="badge bg-success">2</span>
-                </td>
-                <td>September 12, 2025</td>
-                <td>
-                  <div class="btn-group" role="group">
-                    <a href="#" class="btn btn-info btn-sm" title="View">
-                      <i class="bi bi-eye"></i>
-                    </a>
-                    <a href="#" class="btn btn-warning btn-sm" title="Edit">
-                      <i class="bi bi-pencil"></i>
-                    </a>
-                    <form action="#" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this role?');">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger btn-sm" title="Delete">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </form>
-                  </div>
-                </td>
-              </tr>
+              @forelse($roles as $role)
+                <tr>
+                  <td>{{ $loop->iteration + ($roles->currentPage() - 1) * $roles->perPage() }}</td>
+                  <td>{{ $role->name }}</td>
+                  <td>{{ $role->description }}</td>
+                  <td>
+                    <span class="badge bg-success">{{ $role->users_count ?? $role->users()->count() }}</span>
+                  </td>
+                  <td>{{ $role->created_at ? $role->created_at->format('F d, Y') : '' }}</td>
+                  <td>
+                    <div class="btn-group" role="group">
+                      <a href="{{ route('roles.show', $role) }}" class="btn btn-info btn-sm" title="View">
+                        <i class="bi bi-eye"></i>
+                      </a>
+                      <a href="{{ route('roles.edit', $role) }}" class="btn btn-warning btn-sm" title="Edit">
+                        <i class="bi bi-pencil"></i>
+                      </a>
+                      <form action="{{ route('roles.destroy', $role) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this role?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm" title="Delete">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              @empty
+                <tr>
+                  <td colspan="6" class="text-center">No roles found.</td>
+                </tr>
+              @endforelse
             </tbody>
           </table>
           <div class="mt-3">
-            <!-- Pagination here -->
+            {{ $roles->links() }}
           </div>
       </div>
     </div>
