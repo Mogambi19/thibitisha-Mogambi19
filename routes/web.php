@@ -1,3 +1,5 @@
+Route::post('users/{user}/reset-password',[UserController::class,'resetPassword'])
+    ->name('users.reset-password');
 <?php
 
 use Illuminate\Support\Facades\Route;
