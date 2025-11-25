@@ -23,6 +23,25 @@
                         <a href="{{ route('specialities.create') }}" class="btn btn-primary btn-sm">
                             <i class="bi bi-plus-circle"></i> Add New Speciality
                         </a>
+
+                        <form action="{{ route('specialities.index') }}" method="GET" class="d-inline-block me-2">
+                            <div class="input-group input-group-sm">
+                                {{--  show inline error messages --}}
+                                <input type="text" name="search"
+                                    class="form-control {{ $errors->has('search') ? 'is-invalid' : '' }}"
+                                    title="{{ $errors->has('search') ? 'Error: may only contain letters and spaces' : '' }}"
+                                    placeholder="Search Specialities" {{ (request()->has('search') && trim(request('search')) !== "") ? 'autofocus' : '' }} value="{{ old('search', request('search')) }}">
+                                    <div class="input-group-append">
+                                    <button title="Search" type="submit" class="btn btn-secondary">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+
+                        <a href="{{ route('specialities.index') }}" title="Reset" class="btn btn-success">
+                            <i class="bi bi-arrow-clockwise"></i> 
+                        </a>
                     </div>
                 </div>
                 <!-- /.card-header -->
